@@ -1,3 +1,5 @@
+'use client';
+
 import StatusBadge from '@/components/StatusBadge';
 import { formatDate } from '@/util/formatters';
 
@@ -6,8 +8,14 @@ import ExportButton from './ui/ExportButton';
 
 import type { SerializedOrder } from '@/util/types';
 
-export default function Header({ order }: { order: SerializedOrder }) {
-	const { name, status, deliverableDueAt, totalBudget, lineItems } = order;
+export default function Header({
+	order,
+	onExport,
+}: {
+	order: SerializedOrder;
+	onExport?: () => void;
+}) {
+	const { name, status, deliverableDueAt } = order;
 
 	return (
 		<div className='flex h-full w-full flex-col gap-y-2'>
@@ -17,7 +25,7 @@ export default function Header({ order }: { order: SerializedOrder }) {
 					{status && <StatusBadge status={status} />}
 				</div>
 				<div className='flex gap-x-4'>
-					<ExportButton orderName={name} totalBudget={totalBudget} lineItems={lineItems} />
+					<ExportButton onExport={onExport} />
 					<EditOrderForm order={order} />
 				</div>
 			</div>

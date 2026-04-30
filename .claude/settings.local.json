@@ -1,9 +1,5 @@
 {
-  "permissions": {
-    "allow": [
-      "Bash(xargs ls *)",
-      "Bash(npx tsc *)",
-      "Bash(npm run *)"
-    ]
-  }
+	"permissions": {
+		"allow": ["Bash(xargs ls *)", "Bash(npx tsc *)", "Bash(npm run *)"]
+	}
 }

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-	title: `The Great Estimation`,
+	title: `Deal Estimation Interface`,
 	description: `Estimate campaign spend with clarity.`,
 };
 

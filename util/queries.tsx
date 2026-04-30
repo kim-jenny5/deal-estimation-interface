@@ -11,6 +11,7 @@ import { CurrentUser, SerializedOrder } from './types';
 
 export async function resetDatabase() {
 	await prisma.$transaction(async (tx) => {
+		await tx.exportJob.deleteMany({});
 		await tx.lineItem.deleteMany({});
 		await tx.product.deleteMany({});
 		await tx.order.deleteMany({});

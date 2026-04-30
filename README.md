@@ -1,10 +1,10 @@
-# The Great Estimation
+# Deal Estimation Interface (BDG)
 
-**The Great Estimation** is a reimagined version of a feature I originally built at my previous job, where the production app lives behind a company login. To make the work publicly visible and better aligned with modern frontend stacks, I recreated it using **React** and modern tooling.
+This is a reimagined version of a feature I originally built at BDG, where the production app lives behind a company login. To make the work publicly visible and better aligned with modern frontend stacks, I recreated it using **React** and modern tooling.
 
 This project demonstrates my ability to translate real-world business logic and UI/UX patterns into a polished, interactive frontend experience — this time, in a modern, React-based environment.
 
-👉 [Link to deployed app](https://the-great-estimation.vercel.app/)
+👉 [Link to deployed app](https://deal-estimation-interface.vercel.app/)
 
 ## Tech Stack
 

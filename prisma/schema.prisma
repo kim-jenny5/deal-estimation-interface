@@ -64,3 +64,12 @@ model LineItem {
 
   @@unique([orderId, name])
 }
+
+model ExportJob {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name      String
+  status    String   @default("pending")
+  fileData  Bytes?
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @default(now()) @db.Timestamp(6)
+}

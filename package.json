@@ -20,6 +20,7 @@
 		"@heroicons/react": "^2.2.0",
 		"@neondatabase/serverless": "^1.0.2",
 		"@types/papaparse": "^5.5.2",
+		"@vercel/functions": "^3.4.3",
 		"exceljs": "^4.4.0",
 		"luxon": "^3.7.2",
 		"next": "16.1.7",

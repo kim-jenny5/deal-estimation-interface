@@ -5,6 +5,8 @@ import { convertToUTC } from '@/util/formatters';
 import { RATE_TYPES } from '@/util/types';
 
 export async function repopulate() {
+	await prisma.exportJob.deleteMany();
+
 	await prisma.$transaction(async (tx) => {
 		const jenny = await tx.user.upsert({
 			where: { email: 'jennykimdev@gmail.com' },
@@ -34,9 +36,11 @@ export async function repopulate() {
 		});
 		const byName = Object.fromEntries(products.map((p) => [p.name, p.id]));
 
+		const due = new Date(Date.now() + 100 * 24 * 60 * 60 * 1000);
+
 		const order = await tx.order.upsert({
 			where: { creatorId_name: { creatorId: jenny.id, name: 'Nike – Back to School – Q3 2025' } },
-			update: {},
+			update: { deliverableDueAt: due },
 			create: {
 				name: 'Nike – Back to School – Q3 2025',
 				creatorId: jenny.id,
@@ -45,7 +49,7 @@ export async function repopulate() {
 				totalSpend: 0,
 				productsCount: 0,
 				lineItemsCount: 0,
-				deliverableDueAt: convertToUTC('2025-08-18'),
+				deliverableDueAt: due,
 			},
 		});
 
