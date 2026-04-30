@@ -1,7 +1,7 @@
 'use client';
 
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 
 import { formatLabel, formatPlaceholder } from '@/util/formatters';
 
@@ -13,6 +13,7 @@ type SelectInputProps = {
 	placeholder?: string;
 	required?: boolean;
 	onChange?: (value: string) => void;
+	labelAction?: ReactNode;
 };
 
 const statusStyles: Record<string, string> = {
@@ -30,6 +31,7 @@ export default function SelectInput({
 	placeholder,
 	required = true,
 	onChange,
+	labelAction,
 }: SelectInputProps) {
 	const rootRef = useRef<HTMLDivElement>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -77,7 +79,14 @@ export default function SelectInput({
 
 	return (
 		<>
-			{formatLabel(name, { required })}
+			{labelAction ? (
+				<div className='flex items-center justify-between'>
+					{formatLabel(name, { required })}
+					{labelAction}
+				</div>
+			) : (
+				formatLabel(name, { required })
+			)}
 			<div ref={rootRef} className='relative w-full'>
 				<input type='hidden' name={name} value={selected ?? ''} required={required} />
 				{showDot ? (
