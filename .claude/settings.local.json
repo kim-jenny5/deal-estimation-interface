@@ -1,14 +1,5 @@
 {
-  "permissions": {
-    "allow": [
-      "Bash(pnpm:*)",
-      "Bash(grep:*)",
-      "Bash(sed -i '' 's/<tr key={job\\\\.id} className='\"''\"'min-h-13'\"''\"'>/<tr key={job.id}>/' /Users/yunjeonk/Development/personal/the-great-estimation/components/DownloadedTab.tsx)",
-      "Bash(__NEW_LINE_24f625cc131690ff__ sed:*)",
-      "Bash(pnpm add:*)",
-      "Bash(pnpm install:*)",
-      "Bash(pnpm lint:*)",
-      "Bash(pnpm remove:*)"
-    ]
-  }
+	"permissions": {
+		"allow": ["Bash(xargs ls *)", "Bash(npx tsc *)", "Bash(npm run *)"]
+	}
 }

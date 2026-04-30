@@ -125,6 +125,17 @@ export async function getAllProducts() {
 	});
 }
 
+export async function createProduct(data: { name: string }) {
+	const product = await prisma.product.upsert({
+		where: { name: data.name },
+		update: {},
+		create: { name: data.name },
+		select: { id: true, name: true },
+	});
+	revalidatePath('/');
+	return product;
+}
+
 async function recalculateOrder(
 	orderId: string,
 	db: PrismaClient | Prisma.TransactionClient = prisma

@@ -8,6 +8,7 @@ import { createLineItem } from '@/util/queries';
 import { RATE_TYPES } from '@/util/types';
 
 import DrawerWrapper from '../DrawerWrapper';
+import AddVerticalProductForm from './AddVerticalProductForm';
 import LineItemForm from './LineItemForm';
 
 type CreateLineItemFormProps = {
@@ -15,8 +16,13 @@ type CreateLineItemFormProps = {
 	products: { id: string; name: string }[];
 };
 
+type DrawerView = 'lineItem' | 'addProduct';
+
 export default function CreateLineItemForm({ orderId, products }: CreateLineItemFormProps) {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
+	const [drawerView, setDrawerView] = useState<DrawerView>('lineItem');
+	const [localProducts, setLocalProducts] = useState<{ id: string; name: string }[]>([]);
+
 	const [productId, setProductId] = useState<string>('');
 	const [name, setName] = useState<string>('');
 	const [startDate, setStartDate] = useState('');
@@ -27,9 +33,15 @@ export default function CreateLineItemForm({ orderId, products }: CreateLineItem
 
 	const seededOnceRef = useRef(false);
 
+	const allProducts = [
+		...products,
+		...localProducts.filter((lp) => !products.some((p) => p.id === lp.id)),
+	].sort((a, b) => a.name.localeCompare(b.name));
+
 	useEffect(() => {
 		if (!isOpen) {
 			seededOnceRef.current = false;
+			setDrawerView('lineItem');
 			return;
 		}
 		if (seededOnceRef.current) return;
@@ -52,6 +64,23 @@ export default function CreateLineItemForm({ orderId, products }: CreateLineItem
 		setQuantity(String(faker.number.int({ min: 1, max: 3 })));
 	}, [isOpen, products.length ?? 0]); // eslint-disable-line react-hooks/exhaustive-deps
 
+	const handleClose = () => {
+		setIsOpen(false);
+		setDrawerView('lineItem');
+	};
+
+	const handleProductCreated = (product: { id: string; name: string }) => {
+		setLocalProducts((prev) => [...prev, product]);
+		setProductId(product.id);
+		setDrawerView('lineItem');
+	};
+
+	const drawerTitle = drawerView === 'addProduct' ? 'Add new product' : 'Add line item';
+	const drawerDescription =
+		drawerView === 'addProduct'
+			? 'Enter a product name to create a new product.'
+			: 'Add a line item below and click create when done.';
+
 	return (
 		<>
 			<button
@@ -63,19 +92,27 @@ export default function CreateLineItemForm({ orderId, products }: CreateLineItem
 			</button>
 			<DrawerWrapper
 				isOpen={isOpen}
-				onClose={() => setIsOpen(false)}
-				title='Add line item'
-				description='Add a line item below and click create when done.'
+				onClose={handleClose}
+				title={drawerTitle}
+				description={drawerDescription}
 			>
-				<LineItemForm
-					initialValues={{ productId, name, startDate, endDate, rateType, rate, quantity }}
-					products={products}
-					submitFn={createLineItem}
-					extraData={{ orderId }}
-					closeDrawer={() => setIsOpen(false)}
-					resetOnSubmit
-					submitLabel='Create'
-				/>
+				{drawerView === 'addProduct' ? (
+					<AddVerticalProductForm
+						onComplete={handleProductCreated}
+						onBack={() => setDrawerView('lineItem')}
+					/>
+				) : (
+					<LineItemForm
+						initialValues={{ productId, name, startDate, endDate, rateType, rate, quantity }}
+						products={allProducts}
+						submitFn={createLineItem}
+						extraData={{ orderId }}
+						closeDrawer={handleClose}
+						resetOnSubmit
+						submitLabel='Create'
+						onAddProduct={() => setDrawerView('addProduct')}
+					/>
+				)}
 			</DrawerWrapper>
 		</>
 	);

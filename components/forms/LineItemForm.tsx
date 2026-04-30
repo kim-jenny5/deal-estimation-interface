@@ -1,4 +1,6 @@
+import { PlusIcon } from '@heroicons/react/24/solid';
 import { useState, useEffect } from 'react';
+
 
 import { formatLabel } from '@/util/formatters';
 import { lineItemFormSchema } from '@/util/schemas';
@@ -26,6 +28,7 @@ type LineItemFormProps = {
 	resetOnSubmit?: boolean;
 	resetKey?: boolean;
 	submitLabel: string;
+	onAddProduct?: () => void;
 };
 
 export default function LineItemForm({
@@ -37,6 +40,7 @@ export default function LineItemForm({
 	resetOnSubmit = false,
 	resetKey,
 	submitLabel,
+	onAddProduct,
 }: LineItemFormProps) {
 	const [values, setValues] = useState(initialValues);
 	const [errors, setErrors] = useState<Record<string, string>>({});
@@ -110,6 +114,18 @@ export default function LineItemForm({
 								const matched = products.find((product) => product.name === name);
 								set('productId')(matched?.id ?? '');
 							}}
+							labelAction={
+								onAddProduct ? (
+									<button
+										type='button'
+										onClick={onAddProduct}
+										className='flex cursor-pointer items-center gap-0.5 text-xs text-neutral-500 hover:text-neutral-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-300'
+									>
+										<PlusIcon className='h-3 w-3' />
+										Add new
+									</button>
+								) : undefined
+							}
 						/>
 					</div>
 					<div className='sm:col-span-full'>
