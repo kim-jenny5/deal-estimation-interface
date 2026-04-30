@@ -46,7 +46,7 @@ export default function AddVerticalProductForm({ onComplete, onBack }: AddVertic
 				</button>
 				<div>
 					{formatLabel('Product Name', { required: true })}
-					{/* eslint-disable-next-line jsx-a11y/no-autofocus */}
+					{ }
 					<input
 						autoFocus
 						type='text'

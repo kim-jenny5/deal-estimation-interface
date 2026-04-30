@@ -1,6 +1,6 @@
+import { PlusIcon } from '@heroicons/react/24/solid';
 import { useState, useEffect } from 'react';
 
-import { PlusIcon } from '@heroicons/react/24/solid';
 
 import { formatLabel } from '@/util/formatters';
 import { lineItemFormSchema } from '@/util/schemas';
