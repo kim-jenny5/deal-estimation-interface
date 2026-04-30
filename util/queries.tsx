@@ -126,8 +126,10 @@ export async function getAllProducts() {
 }
 
 export async function createProduct(data: { name: string }) {
-	const product = await prisma.product.create({
-		data: { name: data.name },
+	const product = await prisma.product.upsert({
+		where: { name: data.name },
+		update: {},
+		create: { name: data.name },
 		select: { id: true, name: true },
 	});
 	revalidatePath('/');

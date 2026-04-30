@@ -33,13 +33,15 @@ export default function CreateLineItemForm({ orderId, products }: CreateLineItem
 
 	const seededOnceRef = useRef(false);
 
-	const allProducts = [...products, ...localProducts];
+	const allProducts = [
+		...products,
+		...localProducts.filter((lp) => !products.some((p) => p.id === lp.id)),
+	].sort((a, b) => a.name.localeCompare(b.name));
 
 	useEffect(() => {
 		if (!isOpen) {
 			seededOnceRef.current = false;
 			setDrawerView('lineItem');
-			setLocalProducts([]);
 			return;
 		}
 		if (seededOnceRef.current) return;
@@ -67,25 +69,16 @@ export default function CreateLineItemForm({ orderId, products }: CreateLineItem
 		setDrawerView('lineItem');
 	};
 
-	const handleProductSelected = ({
-		productId: newProductId,
-		rateType: newRateType,
-		rate: newRate,
-	}: {
-		productId: string;
-		rateType: string;
-		rate: string;
-	}) => {
-		if (newProductId) setProductId(newProductId);
-		if (newRateType) setRateType(newRateType);
-		if (newRate) setRate(newRate);
+	const handleProductCreated = (product: { id: string; name: string }) => {
+		setLocalProducts((prev) => [...prev, product]);
+		setProductId(product.id);
 		setDrawerView('lineItem');
 	};
 
-	const drawerTitle = drawerView === 'addProduct' ? 'Add vertical product' : 'Add line item';
+	const drawerTitle = drawerView === 'addProduct' ? 'Add new product' : 'Add line item';
 	const drawerDescription =
 		drawerView === 'addProduct'
-			? 'Choose how to add a new vertical product to your order.'
+			? 'Enter a product name to create a new product.'
 			: 'Add a line item below and click create when done.';
 
 	return (
@@ -105,11 +98,7 @@ export default function CreateLineItemForm({ orderId, products }: CreateLineItem
 			>
 				{drawerView === 'addProduct' ? (
 					<AddVerticalProductForm
-						products={allProducts}
-						onComplete={handleProductSelected}
-						onProductCreated={(product) =>
-							setLocalProducts((prev) => [...prev, product])
-						}
+						onComplete={handleProductCreated}
 						onBack={() => setDrawerView('lineItem')}
 					/>
 				) : (

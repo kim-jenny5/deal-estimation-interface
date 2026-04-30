@@ -119,7 +119,7 @@ export default function LineItemForm({
 									<button
 										type='button'
 										onClick={onAddProduct}
-										className='flex items-center gap-0.5 text-xs text-neutral-500 hover:text-neutral-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-300'
+										className='flex cursor-pointer items-center gap-0.5 text-xs text-neutral-500 hover:text-neutral-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-300'
 									>
 										<PlusIcon className='h-3 w-3' />
 										Add new

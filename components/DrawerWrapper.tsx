@@ -35,7 +35,7 @@ export default function DrawerWrapper({
 				/>
 			)}
 			<div
-				className={`fixed top-0 right-0 z-50 h-full w-3/4 transform bg-white shadow-xl transition-transform duration-500 ease-in-out sm:w-1/3 sm:max-w-md ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+				className={`fixed top-0 right-0 z-50 h-full w-3/4 transform bg-white transition-transform duration-500 ease-in-out sm:w-1/3 sm:max-w-md ${isOpen ? 'translate-x-0 shadow-xl' : 'translate-x-full'}`}
 			>
 				<div className='flex flex-col gap-y-1 p-4'>
 					<div className='flex justify-between'>
